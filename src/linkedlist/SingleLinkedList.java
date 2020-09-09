@@ -37,8 +37,12 @@ public class SingleLinkedList {
 	}
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		// TODO Linked List Operation
 		SingleLinkedList list = new SingleLinkedList();
+		
+		// TODO Delete Operation
+		DeleteOperations deleteobj = new DeleteOperations();
+		
 		Node node = list.create(1);
 		list.conect(node);
 	
@@ -49,7 +53,10 @@ public class SingleLinkedList {
 		list.conect(node2);
 		
 		list.print();
-
+		Node deleteNode = list.head;
+		Node obj = deleteobj.deleteNodeByID(3, deleteNode);
+		list.head = obj == null? list.head: obj; 
+		list.print();
 	}
 
 }

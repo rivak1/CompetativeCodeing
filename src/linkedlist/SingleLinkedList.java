@@ -1,4 +1,5 @@
 package linkedlist;
+import java.util.*;
 
 public class SingleLinkedList {
 	
@@ -39,51 +40,28 @@ public class SingleLinkedList {
 	public static void main(String[] args) {
 		// TODO Linked List Operation
 		SingleLinkedList list = new SingleLinkedList();
-		
-		// TODO Delete Operation
-		DeleteOperations deleteobj = new DeleteOperations();
-		
-		Node node = list.create(1);
-		list.conect(node);
-	
-		Node node1 = list.create(2);
-		list.conect(node1);
-		
-		Node node2 = list.create(3);
-		list.conect(node2);
-
-		
-		Node node3 = list.create(4);
-		list.conect(node3);
-	
-		Node node4 = list.create(5);
-		list.conect(node4);
-		
-		Node node5 = list.create(6);
-		list.conect(node5);
-	
-		Node node6 = list.create(7);
-		list.conect(node6);
-		
+		Scanner sc = new Scanner(System.in);
+		SearchOperations searchObj = new SearchOperations();
+		System.out.print("Enter Total Node -:");
+		try {
+			int count = sc.nextInt();
+			for (int i = 0; i <count;  i++) {
+				System.out.println(i+"-------");
+				Node node = list.create(i);
+				list.conect(node);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.err.println(e);
+			System.exit(1);
+		}	
+		Node searchNode = list.head; 
+		System.out.println(searchObj.searchIterative(searchNode,11)+"Result found");
+		Node searchRecursive = list.head; 
+		System.out.println(searchObj.searchRecursive(searchRecursive, 23)+"Result found");
+		System.out.println("RESULT FOUND:-> "+searchObj.getNthNode(searchNode).getId());
 		list.print();
-//		Node deleteNode = list.head;
-//		Node obj = deleteobj.deleteNodeByID(3, deleteNode);
-//		list.head = obj == null? list.head: obj; 
-//		list.print();
-		
-		System.out.println(" AFTER DELETE NODE ");
-//		Node centerNode = list.head;
-//		deleteobj.deleteCenterNode(centerNode);
-//		list.print();
-		
-//		Node firstNode = list.head;
-//		list.head = deleteobj.deleteFirstNode(firstNode);
-//		list.print();
-		
-		Node lasNode = list.head;
-		deleteobj.deleteLastNode(lasNode);
-		list.print();
-		
+		sc.close();	
 		
 	}
 

@@ -42,6 +42,31 @@ public class DeleteOperations {
 	 * @return
 	 */
 	public Node deleteCenterNode(Node node) {
+		
+		int counter = 0;
+		Node dummyCounter = node;
+		Node doubleCounter = node;
+		Node prev = node;
+		boolean odd = true;
+		while ( dummyCounter != null && doubleCounter != null && doubleCounter.getNext() != null && doubleCounter.getNext().getNext() != null ) { 
+			
+			counter  = counter  +  2;
+			prev = dummyCounter;
+			dummyCounter = dummyCounter.getNext();
+			doubleCounter = doubleCounter.getNext().getNext();
+		}
+		
+		if ( doubleCounter.getNext() == null ) {
+			counter = counter - 1;
+			odd = false;
+		}
+		
+		if (odd) {
+			prev.setNext(dummyCounter.getNext().getNext());
+		} else {
+			prev.setNext(dummyCounter.getNext());
+		}
+		
 		return new Node();
 	}
 	
@@ -50,7 +75,7 @@ public class DeleteOperations {
 	 * @return
 	 */
 	public Node deleteFirstNode(Node node) {
-		return new Node();
+		return node.getNext();
 	}
 
 	/**
@@ -58,7 +83,13 @@ public class DeleteOperations {
 	 * @return
 	 */
 	public Node deleteLastNode(Node node) {
-		return new Node();
+		Node prev = node;
+		while ( node.getNext() != null ) {
+			prev = node;
+			node = node.getNext();
+		}
+		prev.setNext(node.getNext());
+		return prev;
 	}
 	
 	

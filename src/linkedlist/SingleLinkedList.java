@@ -46,12 +46,14 @@ public class SingleLinkedList {
 		try {
 			int count = sc.nextInt();
 			for (int i = 0; i <count;  i++) {
-				Node node = list.create(i);
+				System.out.print("ENTER ELEMENT NUMBER -:");
+				int element = sc.nextInt();
+				Node node = list.create(element);
 				list.conect(node);
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.err.println(e);
+			System.err.print(e);
 			System.exit(1);
 		}	
 		//Node searchNode = list.head; 
@@ -62,7 +64,10 @@ public class SingleLinkedList {
 		//Node reverse = list.head;
 		//list.head = searchObj.reverseLinkedList1(reverse);
 		Node nthnode = list.head;
-		System.out.println(searchObj.getNthNodeFromEnd1(nthnode, 3).getId()+"NTH NODE");
+		//System.out.println(searchObj.getNthNodeFromEnd1(nthnode, 3).getId()+"NTH NODE");
+		//System.out.println(searchObj.totalIntegerInNode(nthnode, 1)+"TOTAL COUNT");
+		//System.out.println(searchObj.totalIntegerInNodeRecursion(nthnode, 1)+"TOTAL COUNT FROM RECURSION");
+		System.out.println("MAXIMUM ELEMENT ACCOUR IS :- "+searchObj.countMaximumElement(nthnode).getId());
 		list.print();
 		sc.close();	
 		

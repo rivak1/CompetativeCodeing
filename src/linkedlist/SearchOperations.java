@@ -132,7 +132,7 @@ public class SearchOperations {
 		Node move = node;
 		int count = 0;
 		while (count != pos) {
-			System.out.println(count+"TOTAL COUNT");
+			//System.out.println(count+"TOTAL COUNT");
 			count++;
 			move = move.getNext();
 		}
@@ -144,5 +144,56 @@ public class SearchOperations {
 		return ref;
 	}
 
+	
+	public int totalIntegerInNode(Node node, int element) {
+		int count = 0;
+		while ( node != null ) {
+			
+			if ( node.getId() == element ) {
+				count++;
+			}
+			node  = node.getNext();
+		}
+		
+		return count;
+	}
+	
+	public int totalIntegerInNodeRecursion( Node node, int element ) {
+		int count = 0;
+		if (node != null) {
+			if (node.getId() == element) {
+				count++;
+			}
+				
+			count = count + totalIntegerInNodeRecursion(node.getNext(), element);
+		}
+		return count;
+	}
+	
+	public Node countMaximumElement( Node node ) {
+		Node loop1 = node;
+		int max = -1;
+		int value = 0;
+		int prevCount = 0;
+		Node maxNode = null;
+		while ( loop1 != null ) {
+			int count = 0;
+			Node loop2 = node;	
+			while ( loop2 != null ) {
+				if ( loop1.getId() == loop2.getId() ) {
+					count++;
+				}
+				loop2 = loop2.getNext();
+			}
+			if ( prevCount < count ) {
+				max = loop1.getId();
+				maxNode = loop1;
+				prevCount = count;
+			}
+			loop1 = loop1.getNext();
+		}
+		return maxNode;
+		
+	}
 	
 }

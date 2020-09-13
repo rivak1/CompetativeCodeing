@@ -46,7 +46,6 @@ public class SingleLinkedList {
 		try {
 			int count = sc.nextInt();
 			for (int i = 0; i <count;  i++) {
-				System.out.println(i+"-------");
 				Node node = list.create(i);
 				list.conect(node);
 			}
@@ -55,11 +54,15 @@ public class SingleLinkedList {
 			System.err.println(e);
 			System.exit(1);
 		}	
-		Node searchNode = list.head; 
-		System.out.println(searchObj.searchIterative(searchNode,11)+"Result found");
-		Node searchRecursive = list.head; 
-		System.out.println(searchObj.searchRecursive(searchRecursive, 23)+"Result found");
-		System.out.println("RESULT FOUND:-> "+searchObj.getNthNode(searchNode).getId());
+		//Node searchNode = list.head; 
+		//System.out.println(searchObj.searchIterative(searchNode,11)+"Result found");
+		//Node searchRecursive = list.head; 
+		//System.out.println(searchObj.searchRecursive(searchRecursive, 23)+"Result found");
+		//System.out.println("RESULT FOUND:-> "+searchObj.getNthNode(searchNode).getId());
+		//Node reverse = list.head;
+		//list.head = searchObj.reverseLinkedList1(reverse);
+		Node nthnode = list.head;
+		System.out.println(searchObj.getNthNodeFromEnd1(nthnode, 3).getId()+"NTH NODE");
 		list.print();
 		sc.close();	
 		

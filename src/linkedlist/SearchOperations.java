@@ -172,7 +172,9 @@ public class SearchOperations {
 	
 	public Node countMaximumElement( Node node ) {
 		Node loop1 = node;
+		@SuppressWarnings("unused")
 		int max = -1;
+		@SuppressWarnings("unused")
 		int value = 0;
 		int prevCount = 0;
 		Node maxNode = null;
@@ -196,4 +198,135 @@ public class SearchOperations {
 		
 	}
 	
+	public Node findLoopInNode( Node node ) {
+		Node dnode = node.getNext();
+		Node snode = node;
+		while ( dnode != null  && dnode.getNext() != null && snode != null ) {
+			if ( dnode == snode ) {
+				System.out.println("LENGTH OF LOOP"+countLengthOfLoop(snode, node));
+				return dnode;
+			}
+			dnode = dnode.getNext().getNext();
+			snode = snode.getNext();
+		}
+		
+		return dnode;
+	}
+	
+	public int countLengthOfLoop( Node snode, Node node ) {
+		int count = 0;
+		
+		while (snode != node) {
+			count++;
+			node = node.getNext();
+		}
+		return count;
+	}
+	
+	public Node makemiddleNodeAsHead( Node node ) {
+		Node central = node;
+		Node prev = node;
+		Node doubleNode = node; 
+		while (doubleNode != null && doubleNode.getNext() != null && central != null) {
+			prev = central;
+			central = central.getNext();
+			doubleNode = doubleNode.getNext().getNext();
+		}
+		prev.setNext(central.getNext());
+		System.out.println(central.getId());
+		
+		central.setNext(node);
+		return central;
+	}
+	
+	public Node rotateListByK( Node node, int k ) {
+		Node rnode = null;
+		for (int i=0; i < k; i++) {
+			Node pointerF = node;
+			rnode = node;
+			Node prev = null;
+			while ( rnode.getNext() != null ) {
+				prev  =  rnode;
+				rnode = rnode.getNext();
+			}
+			prev.setNext(null);
+			System.out.println(rnode.getId());
+			rnode.setNext(pointerF);
+			node = rnode;
+		}
+		return rnode;
+	}
+	
+	public Node rotateListByKAndBlock( Node node, int block, int rotation ) {
+		for (int i = 0; i < rotation; i++) {
+			Node startPointer = node;
+			Node prevpointer = node;
+			Node blocknode = node;
+			int cblock = block;
+			
+			while (cblock > 1 && blocknode.getNext() != null) {
+				cblock--;
+				prevpointer = blocknode;
+				blocknode = blocknode.getNext();
+			}
+			System.out.println(prevpointer.getId()+" END POINTER");
+			prevpointer.setNext(blocknode.getNext());
+			blocknode.setNext(startPointer);
+			node = blocknode;
+		}
+		return node;
+	}
+	
+	public Node insertNodeAfterNthNode( Node node , int nthposition, Node inserNode ) {
+		
+		Node refpointer = node;
+		Node movepointer = node;
+		
+		while (refpointer != null && nthposition != 0) {
+			nthposition--;
+			refpointer = refpointer.getNext();
+		}
+		
+		while (refpointer != null) {
+			refpointer = refpointer.getNext();
+			movepointer = movepointer.getNext();
+		}
+		inserNode.setNext(movepointer.getNext());
+		movepointer.setNext(inserNode);
+		
+		return node;
+	}
+	public Node insertNodeBeforeNthnode( Node node , int nthposition, Node inserNode ) {
+		
+		Node refpointer = node;
+		Node movepointer = node;
+		Node moveprevious = null;
+		
+		while (refpointer != null && nthposition != 0) {
+			nthposition--;
+			refpointer = refpointer.getNext();
+		}
+		
+		while (refpointer != null) {
+			moveprevious = movepointer;
+			refpointer = refpointer.getNext();
+			movepointer = movepointer.getNext();
+		}
+		moveprevious.setNext(inserNode);
+		inserNode.setNext(movepointer);
+		return node;
+	}
+
+	public Node insertNodeMiddleNode(Node node, Node create) {
+		
+		Node getMiddle = node;
+		Node doubleNode = node;
+		while ( doubleNode!=null && doubleNode.getNext() != null ) { 	
+			getMiddle = getMiddle.getNext();
+			doubleNode = doubleNode.getNext().getNext();
+		}
+		create.setNext(getMiddle.getNext());
+		getMiddle.setNext(create);
+		return getMiddle;
+	}
 }

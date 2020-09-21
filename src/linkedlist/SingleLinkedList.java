@@ -56,6 +56,13 @@ public class SingleLinkedList {
 			System.err.print(e);
 			System.exit(1);
 		}	
+//		Node loop = list.head;
+//		Node ploop = null;
+//		while (loop.getNext() != null) {
+//			ploop = loop;
+//			loop = loop.getNext();
+//		}
+//		loop.setNext(ploop);
 		//Node searchNode = list.head; 
 		//System.out.println(searchObj.searchIterative(searchNode,11)+"Result found");
 		//Node searchRecursive = list.head; 
@@ -67,7 +74,14 @@ public class SingleLinkedList {
 		//System.out.println(searchObj.getNthNodeFromEnd1(nthnode, 3).getId()+"NTH NODE");
 		//System.out.println(searchObj.totalIntegerInNode(nthnode, 1)+"TOTAL COUNT");
 		//System.out.println(searchObj.totalIntegerInNodeRecursion(nthnode, 1)+"TOTAL COUNT FROM RECURSION");
-		System.out.println("MAXIMUM ELEMENT ACCOUR IS :- "+searchObj.countMaximumElement(nthnode).getId());
+		//System.out.println("MAXIMUM ELEMENT ACCOUR IS :- "+searchObj.countMaximumElement(nthnode).getId());
+		//System.out.println(" IS LOOP "+searchObj.findLoopInNode(nthnode).getId());
+		//list.head = searchObj.makemiddleNodeAsHead(nthnode);
+		//list.head = searchObj.rotateListByK(nthnode, 3);
+		//list.head = searchObj.rotateListByKAndBlock(nthnode, 4, 3);
+		list.head = searchObj.insertNodeBeforeNthnode(nthnode, 4, list.create(5));
+		list.head = searchObj.insertNodeAfterNthNode(nthnode, 5, list.create(6));
+		searchObj.insertNodeMiddleNode(nthnode,list.create(100));
 		list.print();
 		sc.close();	
 		

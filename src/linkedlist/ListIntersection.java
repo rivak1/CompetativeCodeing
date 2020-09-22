@@ -86,6 +86,62 @@ public class ListIntersection {
 		}
 	}
 	
+	public void removeDuplicate(ListIntersection list) {
+ 
+        Node curr = list.head; 
+        
+        /* Traverse list till the last node */
+        while (curr != null) { 
+             Node temp = curr; 
+            /*Compare current node with the next node and  
+            keep on deleting them until it matches the current  
+            node data */
+            while(temp!=null && temp.getId()==curr.getId()) { 
+                temp = temp.getNext(); 
+            } 
+            /*Set current node next to the next different  
+            element denoted by temp*/
+            curr.setNext(temp); 
+            curr = curr.getNext(); 
+        } 
+	}
+	
+	public void swapNode(ListIntersection list) {
+		
+		int x = 5;
+		int y = 6;
+		Node curx= list.head;
+		Node cury = list.head;
+		Node prevx = null;
+		Node prevy = null;
+		while (curx != null && curx.getId() != x) {
+			prevx = curx;
+			curx = curx.getNext();
+		}
+		
+		while (cury != null && cury.getId() != y) {
+			prevy = cury;
+			cury = cury.getNext();
+		}
+
+		if (prevx != null && prevy != null) {
+			this.reverse(curx, cury, prevx, prevy);
+		}
+		list.print();
+	}
+	
+
+	private void reverse(Node curx, Node cury, Node prevx, Node prevy) {	
+	
+		Node tempx = curx.getNext();
+		Node tempy = cury.getNext();
+		prevx.setNext(cury);
+		prevy.setNext(curx);
+		cury.setNext(tempx);
+		curx.setNext(tempy);
+		
+	}
+
 	public static void main(String[] args) {
 		// TODO Linked List Operation
 		ListIntersection list = new ListIntersection();
@@ -105,25 +161,26 @@ public class ListIntersection {
 			System.err.print(e);
 			System.exit(1);
 		}	
-		System.out.print("Enter Total Node -:");
-		try {
-			int count = sc.nextInt();
-			for (int i = 0; i <count;  i++) {
-				System.out.print("ENTER ELEMENT NUMBER -:");
-				int element = sc.nextInt();
-				Node node = list1.create(element);
-				list1.conect(node);
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.err.print(e);
-			System.exit(1);
-		}	
+//		System.out.print("Enter Total Node -:");
+//		try {
+//			int count = sc.nextInt();
+//			for (int i = 0; i <count;  i++) {
+//				System.out.print("ENTER ELEMENT NUMBER -:");
+//				int element = sc.nextInt();
+//				Node node = list1.create(element);
+//				list1.conect(node);
+//			}
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//			System.err.print(e);
+//			System.exit(1);
+//		}	
 //		list.print();
 //		list1.print();
 		// list.intersection(list, list1);
-		list.union(list, list1);
-		list1.print();
+//		list.union(list, list1);
+//		list1.print();
+		list.swapNode(list);
 		sc.close();	
 		
 	}

@@ -96,6 +96,7 @@ public class SearchOperations {
 		Node next = null;
 		
 		while (current != null ) {
+			//1-2-3-4-5
 			// System.out.println("START VALUE OF CURRENT"+current.getId());
 			// System.out.println("VALUE OF PREVIOUS"+prev.getId());
 			next = current.getNext();

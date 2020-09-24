@@ -15,8 +15,8 @@ public class SecreteManager {
 	
 public static void getSecret() {
 
-    String secretName = "Bhupendra";
-    String region = "us-east-2";
+    String secretName = "devl-aws-secret";
+    String region = "eu-west-2";
 
 
     System.out.println("REQUEST GOES TO SERVER");

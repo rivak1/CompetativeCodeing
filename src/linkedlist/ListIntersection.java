@@ -1,5 +1,6 @@
 package linkedlist;
 
+import java.util.LinkedList;
 import java.util.Scanner;
 
 
@@ -108,8 +109,8 @@ public class ListIntersection {
 	
 	public void swapNode(ListIntersection list) {
 		
-		int x = 5;
-		int y = 6;
+		int x = 1;
+		int y = 2;
 		Node curx= list.head;
 		Node cury = list.head;
 		Node prevx = null;
@@ -123,20 +124,103 @@ public class ListIntersection {
 			prevy = cury;
 			cury = cury.getNext();
 		}
-
+		
 		if (prevx != null && prevy != null) {
 			this.reverse(curx, cury, prevx, prevy);
 		}
+
+		if (prevx == null && prevy != null) {
+			list.head = cury;
+			prevy.setNext(curx);
+			Node temp = curx.getNext();
+			curx.setNext(cury.getNext());
+			cury.setNext(temp);
+		}
+		if (prevy == null && prevx != null) {
+			list.head = curx;
+			Node temp = cury.getNext();
+			prevx.setNext(cury);
+			cury.setNext(curx.getNext());
+			curx.setNext(temp);
+		}
+		list.print();
+	}
+
+	
+	public void deleteRighNodeHigher(ListIntersection list) {
+		Node current = list.head;
+		Node prev = null;
+		while (current.getNext() != null) {
+			if (current.getId() < current.getNext().getId()) {
+				if(prev == null) {
+					this.head = current.getNext();
+				} else {
+					prev.setNext(current.getNext());
+					prev = current;
+				}
+			} else {
+				prev = current;
+			}
+			current = current.getNext();
+		}
+		
 		list.print();
 	}
 	
+	public void addTwoList( ListIntersection list, ListIntersection list2) {
+		
+		Node n1 = list.head;
+		Node n2 = list2.head;
+		ListIntersection list3 = new ListIntersection();
+		int carr = 0;
+		while ( n1 != null && n2 != null ) {
+			int sum  = n1.getId() + n2.getId() + carr;
+			int rem  = sum%10 == 1? 0: sum%10;
+			if (list3.head == null) {
+				System.out.println(rem+"SUM VALUE");
+				Node node = list3.create(rem);
+				list3.head = node;
+			} else {
+				System.out.println(rem+"SUM VALUE");
+				Node node = list3.create(rem);
+				node.setNext(list3.head);
+				list3.head = node;
+			}
+			carr = sum/10;			
+			n1 = n1.getNext();
+			n2 = n2.getNext();
+		}
+		
+		while (n1 != null) {
+			int  sum  = n1.getId() + carr;
+			int  rem = sum%10 == 1? 0: sum%10;
+			Node node = list3.create(rem);
+			node.setNext(list3.head);
+			list3.head = node;
+			carr = sum/10;
+			n1 = n1.getNext();
+		}
+		
+		while (n2 != null) {
+			int  sum  = n2.getId() + carr;
+			int  rem = sum%10 == 1? 0: sum%10;
+			Node node = list3.create(rem);
+			node.setNext(list3.head);
+			list3.head = node;
+			carr = sum/10;
+			n2 = n2.getNext();
+		}
+		
+		list3.print();
+	}
+
 
 	private void reverse(Node curx, Node cury, Node prevx, Node prevy) {	
 	
-		Node tempx = curx.getNext();
-		Node tempy = cury.getNext();
 		prevx.setNext(cury);
 		prevy.setNext(curx);
+		Node tempx = curx.getNext();
+		Node tempy = cury.getNext();
 		cury.setNext(tempx);
 		curx.setNext(tempy);
 		
@@ -161,27 +245,48 @@ public class ListIntersection {
 			System.err.print(e);
 			System.exit(1);
 		}	
-//		System.out.print("Enter Total Node -:");
-//		try {
-//			int count = sc.nextInt();
-//			for (int i = 0; i <count;  i++) {
-//				System.out.print("ENTER ELEMENT NUMBER -:");
-//				int element = sc.nextInt();
-//				Node node = list1.create(element);
-//				list1.conect(node);
-//			}
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//			System.err.print(e);
-//			System.exit(1);
-//		}	
+		System.out.print("Enter Total Node -:");
+		try {
+			int count = sc.nextInt();
+			for (int i = 0; i <count;  i++) {
+				System.out.print("ENTER ELEMENT NUMBER -:");
+				int element = sc.nextInt();
+				Node node = list1.create(element);
+				list1.conect(node);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.err.print(e);
+			System.exit(1);
+		}	
 //		list.print();
 //		list1.print();
 		// list.intersection(list, list1);
 //		list.union(list, list1);
 //		list1.print();
-		list.swapNode(list);
+//		list.swapNode(list);
+//		list.swapPairWise(list);
+//		list.deleteRighNodeHigher(list);
+		list.addTwoList(list1, list);
 		sc.close();	
+		
+	}
+
+
+	private void swapPairWise(ListIntersection list) {
+		
+		Node nx = list.head;
+		Node ny = list.head.getNext();
+		
+		while (ny.getNext() != null) {
+			this.swap(nx, ny);
+			nx = nx.getNext();
+			ny = ny.getNext();
+		}
+		
+	}
+
+	private void swap(Node nx, Node ny) {
 		
 	}
 }

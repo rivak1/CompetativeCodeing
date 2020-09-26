@@ -225,6 +225,54 @@ public class ListIntersection {
 		curx.setNext(tempy);
 		
 	}
+	
+
+	public void mergeTowLinkedList(ListIntersection list1, ListIntersection list) {
+		
+		Node n1 = list.head;
+		Node n2 = list1.head;
+		Node node = null;
+		ListIntersection list2 = new  ListIntersection();
+		
+		while (n1 != null && n2 != null) {
+			
+			if (n1.getId() <= n2.getId() ) {
+				
+				node = list2.create(n1.getId());
+				n1 = n1.getNext();
+			}
+			else if (n1.getId() >= n2.getId() ) {
+				node = list2.create(n2.getId());
+				n2 = n2.getNext();
+			}
+			
+			if (list2.head == null) {
+				list2.head = node;
+			} else {
+				node.setNext(list2.head);
+				list2.head = node;
+			}
+		}
+		
+		while (n1 != null) {
+			node = list2.create(n1.getId());
+			node.setNext(list2.head);
+			list2.head = node;
+			n1 = n1.getNext();
+			
+		}
+		while (n2 != null) {
+			node = list2.create(n2.getId());
+			node.setNext(list2.head);
+			list2.head = node;
+			n2 = n2.getNext();
+			
+		}
+		
+		list2.print();
+		
+	}
+
 
 	public static void main(String[] args) {
 		// TODO Linked List Operation
@@ -268,10 +316,10 @@ public class ListIntersection {
 //		list.swapPairWise(list);
 //		list.deleteRighNodeHigher(list);
 		list.addTwoList(list1, list);
+		//list.mergeTowLinkedList(list1, list);
 		sc.close();	
 		
 	}
-
 
 	private void swapPairWise(ListIntersection list) {
 		
@@ -285,6 +333,7 @@ public class ListIntersection {
 		}
 		
 	}
+
 
 	private void swap(Node nx, Node ny) {
 		

@@ -29,6 +29,26 @@ public class DoubleLinkedList {
 		}
 	}
 	
+	public void deleteNode (DoubleLinkedList list) {
+		DNode node = list.head;	
+		DNode prev = null;
+		while ( node != null ) {
+			if ( node.getId() == 3 ) {
+			
+				if (node.getPrev() == null ) {
+					list.head = node.getNext();
+					this.head.setPrev(null);
+				} else {
+					prev = node.getPrev();
+					prev.setNext(node.getNext());
+				}
+			}
+			node = node.getNext();
+		}
+		
+	}
+	
+	
 	private void print() {
 		
 		DNode temp = this.head;
@@ -40,7 +60,6 @@ public class DoubleLinkedList {
 		
 	}
 	
-
 	public static void main(String[] args) {
 		
 		DoubleLinkedList list = new DoubleLinkedList();
@@ -55,7 +74,25 @@ public class DoubleLinkedList {
 			count--;
 		}
 		list.print();
+		//list.deleteNode(list);
+		list.reverse(list);
+		System.out.println("AFTER REVERSE");
+		list.print();
 		sc.close();
+	}
+
+	private void reverse(DoubleLinkedList list) {
+		DNode node = list.head;
+		DNode next = null;
+		DNode prev = null;
+		while (node != null) {
+			next = node.getNext();
+			node.setNext(prev);
+			node.setPrev(next);
+			prev = node;
+			node = next;
+		}
+		list.head = prev;
 	}
 	
 

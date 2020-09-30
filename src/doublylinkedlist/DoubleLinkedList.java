@@ -75,12 +75,113 @@ public class DoubleLinkedList {
 		}
 		list.print();
 		//list.deleteNode(list);
-		list.reverse(list);
-		System.out.println("AFTER REVERSE");
-		list.print();
+		//list.reverse(list);
+		//list.cloneList(list);
+		//list.swapKElemetn(list);
+		//list.findSum(list);
+		list.findSumLessCom(list);
 		sc.close();
 	}
 
+	private void findSumLessCom(DoubleLinkedList list) {
+		DNode start = list.head;
+		DNode end   = list.head;
+		int k = 5;
+		
+		while (end.getNext() != null) {
+			end = end.getNext();
+		}
+		
+		while (start != null && end != null && start != end && end.getNext() != start) {	
+			System.out.println("----------------------------");
+			if (start.getId() + end.getId() == k) {
+				System.out.println(start.getId()+"()"+end.getId());
+				start = start.getNext();
+				end   = end.getPrev();
+			}
+			else {
+				
+				if(start.getId() + end.getId() > k ) {
+					end = end.getPrev();
+				} else {
+					start = start.getNext();
+				}
+			}
+		}
+		
+	}
+
+	@SuppressWarnings("unused")
+	private void findSum(DoubleLinkedList list) {
+		int k = 7;
+		DNode temp = list.head;
+		while (temp != null) {
+			DNode temp1 = list.head;
+			while (temp1 != null) {
+				
+				int sum = temp.getId() + temp1.getId();
+				if (sum == k) {
+					System.out.println("Match Param Are ( "+temp.getId()+" , "+ temp1.getId()+" )");
+				}
+				temp1 = temp1.getNext();
+			}
+			temp = temp.getNext();
+		}
+	}
+
+	@SuppressWarnings("unused")
+	private void swapKElemetn(DoubleLinkedList list) {
+		int count = 1;
+		int k = 5;
+		int bnodeCount;
+		DNode loopCounter = list.head;
+		while (loopCounter != null ) { 
+			count++;
+			loopCounter = loopCounter.getNext();
+		}
+		bnodeCount = count - k;
+		DNode swapCounter = list.head;
+		DNode fNode = null;
+		DNode bNode = null;
+		int loop = 1;
+		while ( swapCounter != null ) {
+			if(loop == k) {
+				fNode = swapCounter;
+			}
+			if (loop == bnodeCount) {
+				bNode = swapCounter;
+			}
+			loop++;
+			swapCounter = swapCounter.getNext();
+		}
+		fNode.getPrev().setNext(bNode);
+		bNode.getPrev().setNext(fNode);
+		DNode tempf = fNode.getNext();
+		DNode tempb = bNode.getNext();
+		fNode.setNext(tempb);
+		bNode.setNext(tempf);	
+		System.out.println(fNode.getId()+"IDIDIDI"+bNode.getId());
+
+	}
+
+	@SuppressWarnings("unused")
+	private void cloneList(DoubleLinkedList list) {
+		DNode node = list.head;
+		while ( node != null ) {
+			node.setNext(list.create(node.getId(), node.getNext(), node.getPrev()));
+			node = node.getNext().getNext();
+		}
+		
+		// Extract The Original From Clone
+		DNode clone = list.head;
+		while ( clone != null ) {
+			clone.setNext(clone.getNext().getNext());
+			clone = clone.getNext();
+		}	
+		
+	}
+
+	@SuppressWarnings("unused")
 	private void reverse(DoubleLinkedList list) {
 		DNode node = list.head;
 		DNode next = null;
@@ -95,5 +196,4 @@ public class DoubleLinkedList {
 		list.head = prev;
 	}
 	
-
 }

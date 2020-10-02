@@ -79,10 +79,35 @@ public class DoubleLinkedList {
 		//list.cloneList(list);
 		//list.swapKElemetn(list);
 		//list.findSum(list);
-		list.findSumLessCom(list);
+		//list.findSumLessCom(list);
+		list.insetNodeInSorted(list);
+		System.out.println("========================================");
+		list.print();
 		sc.close();
 	}
 
+	private void insetNodeInSorted(DoubleLinkedList list) {
+		DNode node = list.head;
+		int k = 1;
+		while (node.getNext() != null ) {
+			
+			if ( node.getId() > k ) {
+				DNode temp = list.create(k, null, null);
+				DNode prev = null;
+				prev = node.getPrev();
+				prev.setNext(temp);
+				temp.setNext(node);
+				temp.setPrev(prev);
+				node.setPrev(temp);
+				break;
+				
+			}
+			
+			node = node.getNext();
+		}
+	}
+
+	@SuppressWarnings("unused")
 	private void findSumLessCom(DoubleLinkedList list) {
 		DNode start = list.head;
 		DNode end   = list.head;

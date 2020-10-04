@@ -1,7 +1,6 @@
 package doublylinkedlist;
 
 import java.util.Scanner;
-
 public class DoubleLinkedList {
 	
 	private DNode head;
@@ -49,6 +48,7 @@ public class DoubleLinkedList {
 	}
 	
 	
+	@SuppressWarnings("unused")
 	private void print() {
 		
 		DNode temp = this.head;
@@ -73,19 +73,121 @@ public class DoubleLinkedList {
 			list.connectNodes(new DNode(id, null, null));
 			count--;
 		}
-		list.print();
+		//list.print();
 		//list.deleteNode(list);
 		//list.reverse(list);
 		//list.cloneList(list);
 		//list.swapKElemetn(list);
 		//list.findSum(list);
 		//list.findSumLessCom(list);
-		list.insetNodeInSorted(list);
-		System.out.println("========================================");
+		//list.insetNodeInSorted(list);
+		//list.deleteNodeFromList(list);
+		//list.countTriplet(list);
+		//list.removeDuplicate(list);
+		list.deleteOccursOfElement(list);
 		list.print();
 		sc.close();
 	}
 
+	private void deleteOccursOfElement(DoubleLinkedList list) {
+		DNode node = list.head;
+		int k = 1;
+		while (node.getNext() != null) {
+			if ( k == node.getId() ) {
+				DNode prev = node.getPrev();
+				DNode next = node.getNext();
+				if ( prev == null ) {
+					list.head = next;
+					next.setPrev(null);
+					node = next;
+				}else {
+					prev.setNext(next);
+					next.setPrev(prev);
+					node = next;
+				}
+			} else {
+				node = node.getNext();
+			}
+		}
+		if (node.getNext() == null && node.getId() == k) {
+			DNode prev = node.getPrev();
+			if (prev == null) {
+				list.head = null;
+			} else {
+				prev.setNext(null);
+			}
+		}
+	}
+
+	@SuppressWarnings("unused")
+	private void removeDuplicate(DoubleLinkedList list) {
+		
+		DNode node = list.head;
+		while (node.getNext() != null) {
+			int k = node.getId();
+			DNode next = node.getNext();
+			if (k == next.getId()) {
+				System.out.println("DUPLICATE-Id------------"+next.getId());
+				
+				node.setNext(next.getNext());
+				if (next.getNext()!= null) {
+					next.getNext().setPrev(next.getPrev());
+				}
+			} else {
+			node = node.getNext();
+		 }
+		}
+	}
+
+	@SuppressWarnings("unused")
+	private void countTriplet(DoubleLinkedList list) {
+		DNode prev  = list.head;
+		DNode next  = list.head;
+		DNode prev1 = null;
+		int k =15;
+		
+		while (prev.getNext() != null) {
+			prev = prev.getNext();
+			prev1 = prev.getPrev();
+		}
+		
+		for (DNode current = prev; current != null; current = current.getPrev()) {
+			prev = current.getPrev();
+			while (next != null && prev != null &&  prev.getNext() != next && prev != next) {
+				int sum = prev.getId() + next.getId() + prev1.getId();
+				if ( sum == k) {
+					System.out.println("("+prev.getId()+", "+prev1.getId()+", "+next.getId()+")");
+					next = next.getNext();
+					prev1 = prev.getPrev();
+				}
+				
+				if (sum > k) {
+					prev1 = prev1.getPrev();
+				} else {
+					next = next.getNext();
+				}
+			}
+		}
+	}
+
+	@SuppressWarnings("unused")
+	private void deleteNodeFromList(DoubleLinkedList list) {
+		DNode node = list.head;
+		int d = 3;
+		while (node != null) {
+			
+			if ( node.getId() == d ) {
+				DNode prev = node.getPrev();
+				prev.setNext(node.getNext());
+				node.setPrev(prev);
+				break;
+			}
+			
+			node = node.getNext();
+		}
+	}
+
+	@SuppressWarnings("unused")
 	private void insetNodeInSorted(DoubleLinkedList list) {
 		DNode node = list.head;
 		int k = 1;

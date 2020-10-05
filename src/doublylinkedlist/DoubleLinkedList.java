@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class DoubleLinkedList {
 	
 	private DNode head;
+	private DNode tail;
 	
 	DNode create(int value, DNode next, DNode prev) {
 		
@@ -15,16 +16,38 @@ public class DoubleLinkedList {
 	}
 	
 	public void connectNodes( DNode node ) {
-		
-		if (this.head == null) {
+		boolean flag = false;
+		if (this.head == null && this.tail == null) {
 			this.head = node;
+			this.tail = node;
 		} else {
 			DNode temp = this.head;
 			while (temp.getNext() != null) {		
+				if (temp.getId() > node.getId()) {
+					flag = true;
+					break;
+				}
 				temp = temp.getNext();
 			}
+		if (temp.getId() > node.getId()) {
+			flag = true;
+		}
+		if (flag) {
+			if ( temp.getPrev() == null ) {
+				this.head = node;
+				temp.setPrev(node);
+				node.setNext(temp);
+			} else {
+				temp.getPrev().setNext(node);
+				node.setPrev(temp.getPrev());
+				node.setNext(temp);
+				temp.setPrev(node);
+			}
+		} else {
 		node.setPrev(temp);
 		temp.setNext(node);
+		this.tail = node;
+		}
 		}
 	}
 	
@@ -71,6 +94,8 @@ public class DoubleLinkedList {
 			System.out.println("ENTER TOTAL NODE VALUE -: ");
 			int id = sc.nextInt();
 			list.connectNodes(new DNode(id, null, null));
+			System.out.println("----------------------------------------------FINDAL");
+			list.print();
 			count--;
 		}
 		//list.print();
@@ -84,8 +109,9 @@ public class DoubleLinkedList {
 		//list.deleteNodeFromList(list);
 		//list.countTriplet(list);
 		//list.removeDuplicate(list);
-		list.deleteOccursOfElement(list);
+//		list.deleteOccursOfElement(list);
 		list.print();
+		System.out.println(list.tail.getId());
 		sc.close();
 	}
 

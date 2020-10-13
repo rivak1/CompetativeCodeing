@@ -85,19 +85,28 @@ public class DoubleLinkedList {
 	
 	public static void main(String[] args) {
 		
-		DoubleLinkedList list = new DoubleLinkedList();
-		
+		DoubleLinkedList list1 = new DoubleLinkedList();
+		DoubleLinkedList list2 = new DoubleLinkedList();
 		Scanner sc = new Scanner(System.in);
-		System.out.println("ENTER TOTAL NODE -: ");
+		System.out.println("ENTER TOTAL NODE FOR 1 -: ");
 		int count = sc.nextInt();
 		while (count != 0) {
 			System.out.println("ENTER TOTAL NODE VALUE -: ");
 			int id = sc.nextInt();
-			list.connectNodes(new DNode(id, null, null));
-			System.out.println("----------------------------------------------FINDAL");
-			list.print();
+			list1.connectNodes(new DNode(id, null, null));
 			count--;
 		}
+
+//		System.out.println("ENTER TOTAL NODE FOR 2-: ");
+//		int count1 = sc.nextInt();
+//		while (count1 != 0) {
+//			System.out.println("ENTER TOTAL NODE VALUE -: ");
+//			int id = sc.nextInt();
+//			list2.connectNodes(new DNode(id, null, null));
+//			count1--;
+//		}
+		
+		
 		//list.print();
 		//list.deleteNode(list);
 		//list.reverse(list);
@@ -109,12 +118,60 @@ public class DoubleLinkedList {
 		//list.deleteNodeFromList(list);
 		//list.countTriplet(list);
 		//list.removeDuplicate(list);
-//		list.deleteOccursOfElement(list);
-		list.print();
-		System.out.println(list.tail.getId());
+        //list.deleteOccursOfElement(list);
+		//list1.sumUsingDoublyLinkedList(list1, list2);
+		//list1.multiplyUsingDoublyList(list1,list2);
+		list1.rotateListByNNode(list1);
 		sc.close();
 	}
+	
+	
+	private void rotateListByNNode(DoubleLinkedList list1) {
+		int n = 4;
+		System.out.println(tail.getPrev().getNext()+"-------------------");
+		for (int i = 0; i < n; i++) {
+			DNode node = list1.head;
+			DNode tail = list1.tail;
+			list1.tail = tail.getPrev();
+			tail.getPrev().setNext(null);
+			tail.setNext(node);
+			node.setPrev(tail);
+			tail.setPrev(null);
+			list1.head = tail;
+			System.out.println("-----------------------------_AFTER ROATE"+i);
+			list1.print();
+		}
+		
+	}
 
+	private void sumUsingDoublyLinkedList(DoubleLinkedList list1, DoubleLinkedList list2) {
+		DNode A = list1.tail;
+		DNode B = list2.tail;
+		int   C = 0;
+		while (A != null || B != null) {
+			
+			if ( A != null && B != null ) {
+				System.out.print((A.getId() + B.getId() + C)%10);
+				C = (A.getId() + B.getId() + C) / 10;
+				A = A.getPrev();
+				B = B.getPrev();
+			}
+			else if(A==null && B != null) {
+				System.out.print((B.getId() + C)%10);
+				C = (B.getId() + C) / 10;
+				B = B.getPrev();	
+			}
+			else if(A != null && B == null) {
+				System.out.print((A.getId() + C)%10);
+				C = (A.getId() + C) / 10;
+				A = A.getPrev();	
+			}
+		}
+		if (C > 0)
+		 System.out.print(C);
+	}
+
+	@SuppressWarnings("unused")
 	private void deleteOccursOfElement(DoubleLinkedList list) {
 		DNode node = list.head;
 		int k = 1;

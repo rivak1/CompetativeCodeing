@@ -121,11 +121,20 @@ public class DoubleLinkedList {
         //list.deleteOccursOfElement(list);
 		//list1.sumUsingDoublyLinkedList(list1, list2);
 		//list1.multiplyUsingDoublyList(list1,list2);
-		list1.rotateListByNNode(list1);
+		//list1.rotateListByNNode(list1);
+		list1.fondSplit();
 		sc.close();
 	}
 	
 	
+	private void fondSplit() {
+		String str = "{sssssssssssssssssssssssssss}";
+		String v1 = str.split("\\{",2)[1];
+		String v2[] = v1.split("\\}");
+		System.out.println(v1+"------------"+v2[0]);
+	}
+
+	@SuppressWarnings("unused")
 	private void rotateListByNNode(DoubleLinkedList list1) {
 		int n = 4;
 		System.out.println(tail.getPrev().getNext()+"-------------------");

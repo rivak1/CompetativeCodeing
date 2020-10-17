@@ -122,11 +122,34 @@ public class DoubleLinkedList {
 		//list1.sumUsingDoublyLinkedList(list1, list2);
 		//list1.multiplyUsingDoublyList(list1,list2);
 		//list1.rotateListByNNode(list1);
-		list1.fondSplit();
+		//list1.fondSplit();
+		list1.head = list1.reverseOnSize(list1, list1.head);
+		list1.print();
 		sc.close();
 	}
 	
 	
+	private DNode reverseOnSize(DoubleLinkedList list1, DNode node) {
+		int k = 3;
+		int count = 0;
+		DNode next = null;
+		DNode prev = null;
+		while (count != k && node != null) {
+			next = node.getNext();
+			node.setNext(prev);
+			node.setPrev(next);
+			prev = node;
+			node = next;
+			count ++;
+		}
+		if (node != null && node.getNext() != null) {
+			DNode temp = prev;
+			System.out.println(prev.getPrev().getId()+"===============");
+			temp.setNext(reverseOnSize(list1, node));
+		} 
+		return prev;
+	}
+
 	private void fondSplit() {
 		String str = "{sssssssssssssssssssssssssss}";
 		String v1 = str.split("\\{",2)[1];
@@ -153,6 +176,7 @@ public class DoubleLinkedList {
 		
 	}
 
+	@SuppressWarnings("unused")
 	private void sumUsingDoublyLinkedList(DoubleLinkedList list1, DoubleLinkedList list2) {
 		DNode A = list1.tail;
 		DNode B = list2.tail;
@@ -413,6 +437,17 @@ public class DoubleLinkedList {
 			node = next;
 		}
 		list.head = prev;
-	}
-	
+	}	
+	private DNode reverse1(DNode node, DNode temp1) {
+		DNode next = null;
+		DNode prev = null;
+		while (node.getId() != temp1.getId()) {
+			next = node.getNext();
+			node.setNext(prev);
+			node.setPrev(next);
+			prev = node;
+			node = next;
+		}
+		return prev;
+	}	
 }

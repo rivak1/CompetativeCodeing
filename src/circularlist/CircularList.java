@@ -1,9 +1,9 @@
 package circularlist;
-
 import java.util.Scanner;
 
 public class CircularList {
 	CNode head = null;
+	CNode head1 = null;
 	CNode loop = null;
 	
 	
@@ -19,13 +19,30 @@ public class CircularList {
 			list.connect(node);
 			no--;
 		}
-		list.print();
 		list.split();
+		list.print();
 		sc.close();
 	}
 
 
 	private void split() {
+		CNode temp = this.head;
+		CNode tempDouble = this.head;
+		
+		while (tempDouble.getNext() != this.head && tempDouble.getNext().getNext() != this.head) { 
+			temp = temp.getNext();
+			tempDouble = tempDouble.getNext().getNext();
+		}
+		System.out.println(temp.getId()+"--1212--"+tempDouble.getId());
+		CNode next = temp.getNext();
+		temp.setNext(this.head);
+		if (tempDouble.getNext() != this.head) {
+			tempDouble.getNext().setNext(next);
+			this.head1 = next;
+		} else {
+			tempDouble.setNext(next);
+			this.head1 = next;
+		}
 		
 	}
 
@@ -33,9 +50,17 @@ public class CircularList {
 	private void print() {
 		CNode temp = this.head;
 		while (true) {
-			System.out.println("GIVEN VALUE :- "+temp.getId());
+			System.out.println("GIVEN VALUE temp :- "+temp.getId());
 			temp = temp.getNext();
 			if (temp == this.head)
+				break;			
+		}
+		
+		CNode temp1 = this.head1;
+		while (true) {
+			System.out.println("GIVEN VALUE temp1:- "+temp1.getId());
+			temp1 = temp1.getNext();
+			if (temp1 == this.head1)
 				break;			
 		}
 	}

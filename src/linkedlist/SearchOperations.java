@@ -1,5 +1,7 @@
 package linkedlist;
 
+import java.util.HashSet;
+
 public class SearchOperations {
 
 	/**
@@ -45,7 +47,9 @@ public class SearchOperations {
 	 * @return
 	 */
 	public Node getNthNode( Node node ) {
-		
+		HashSet<Integer> set=new HashSet<Integer>();  
+		set.add(1);
+		System.out.println(set.contains(1));
 		while ( node.getNext() != null ) {
 			
 			node = node.getNext();

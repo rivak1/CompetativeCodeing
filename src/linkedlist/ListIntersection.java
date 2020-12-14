@@ -272,8 +272,34 @@ public class ListIntersection {
 		list2.print();
 		
 	}
-
-
+	
+	public Node mergeList(Node n1 , Node n2) {
+		Node temp = null;
+		if( n1 == null) {
+			System.out.println("value is  n2 null");
+			return n2;
+		}else {
+			System.out.println("value is n1"+n1.getId());
+		}
+		if (n2 == null) {
+			System.out.println("value is n1 null");
+			return n1;
+		}else {
+			System.out.println("value is n2"+n2.getId());
+		}
+		
+		if (n1.getId() <= n2.getId()) {
+			n1.setNext(mergeList(n1.getNext(), n2));
+			temp = n1;
+		}          
+		else if (n2.getId() <= n1.getId()) {
+			n2.setNext(mergeList(n1, n2.getNext()));
+			temp = n2;
+		}
+		return temp;
+		
+	}
+	
 	public static void main(String[] args) {
 		// TODO Linked List Operation
 		ListIntersection list = new ListIntersection();
@@ -293,20 +319,20 @@ public class ListIntersection {
 			System.err.print(e);
 			System.exit(1);
 		}	
-		System.out.print("Enter Total Node -:");
-		try {
-			int count = sc.nextInt();
-			for (int i = 0; i <count;  i++) {
-				System.out.print("ENTER ELEMENT NUMBER -:");
-				int element = sc.nextInt();
-				Node node = list1.create(element);
-				list1.conect(node);
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.err.print(e);
-			System.exit(1);
-		}	
+//		System.out.print("Enter Total Node -:");
+//		try {
+//			int count = sc.nextInt();
+//			for (int i = 0; i <count;  i++) {
+//				System.out.print("ENTER ELEMENT NUMBER -:");
+//				int element = sc.nextInt();
+//				Node node = list1.create(element);
+//				list1.conect(node);
+//			}
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//			System.err.print(e);
+//			System.exit(1);
+//		}	
 //		list.print();
 //		list1.print();
 		// list.intersection(list, list1);
@@ -315,10 +341,76 @@ public class ListIntersection {
 //		list.swapNode(list);
 //		list.swapPairWise(list);
 //		list.deleteRighNodeHigher(list);
-		list.addTwoList(list1, list);
+		//list.addTwoList(list1, list);
 		//list.mergeTowLinkedList(list1, list);
+//		list.head = list.mergerSort(list.head);
+//		list.print();
+		Node tails = list.getLastNode(list.head);
+		list.quickSort(list.head, tails);
 		sc.close();	
 		
+	}
+	
+	private void quickSort(Node I, Node J) {
+	
+		if(I.getNext() != null && I.getNext() != J && I != J) {
+			Node pivot = this.partison(I, J);
+			System.out.println(pivot.getId()+"PIVOT VALUE");
+			this.print();
+			quickSort(I, pivot);
+			quickSort(pivot.getNext(), J);
+		}
+	}
+
+	private Node partison(Node I, Node J) {
+		Node K = I;
+		int pivot = J.getId();
+		Node prevPivot = I; 
+		while( I != J) {
+			if ( I.getId() <= pivot ) {
+				prevPivot = K;
+				int temp = K.getId();
+				K.setId(I.getId());
+				I.setId(temp);
+				K = K.getNext();
+			}
+			I = I.getNext();
+		}
+		int temp =K.getId();
+		K.setId(J.getId());
+		J.setId(temp);
+		return prevPivot;
+	}
+
+	private Node getLastNode(Node head) {
+		while (head.getNext() != null) {
+			head = head.getNext();
+		}
+		return head;
+	}
+
+	private Node middle(Node node) {
+		Node slow = node;
+		Node fast = node;
+		while (fast.getNext() != null && fast.getNext().getNext() != null) {
+			slow  = slow.getNext();
+			fast = fast.getNext().getNext();
+		}
+		Node temp = slow.getNext();
+		slow.setNext(null);
+		return temp;
+	}
+	
+	private Node mergerSort(Node node ) {
+		if (node != null && node.getNext() != null) {
+			Node second = this.middle(node);
+			///System.out.println(second.getId());
+			node   = mergerSort(node);
+			second = mergerSort(second);
+			return this.mergeList(node, second);
+		} else {
+			return node;
+		}
 	}
 
 	private void swapPairWise(ListIntersection list) {
@@ -338,4 +430,7 @@ public class ListIntersection {
 	private void swap(Node nx, Node ny) {
 		
 	}
+	
+	
+	
 }

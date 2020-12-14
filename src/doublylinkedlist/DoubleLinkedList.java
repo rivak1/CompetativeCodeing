@@ -1,6 +1,10 @@
 package doublylinkedlist;
 
+import java.awt.List;
+import java.util.HashSet;
 import java.util.Scanner;
+
+import PracticePrblem.SNode;
 public class DoubleLinkedList {
 	
 	private DNode head;
@@ -15,7 +19,7 @@ public class DoubleLinkedList {
 		return node;
 	}
 	
-	public void connectNodes( DNode node ) {
+	public void connectNodes1( DNode node ) {
 		boolean flag = false;
 		if (this.head == null && this.tail == null) {
 			this.head = node;
@@ -51,6 +55,21 @@ public class DoubleLinkedList {
 		}
 	}
 	
+	public void connectNodes( DNode node ) {
+		if (this.head == null) {
+			this.head = node;
+			this.tail = node;
+		} else {
+			DNode temp = this.head;
+			while (temp.getNext() != null) {
+				temp = temp.getNext();
+			}
+			temp.setNext(node);
+			node.setPrev(temp);
+			this.tail = node;
+		}
+	}
+	
 	public void deleteNode (DoubleLinkedList list) {
 		DNode node = list.head;	
 		DNode prev = null;
@@ -80,6 +99,13 @@ public class DoubleLinkedList {
 			System.out.println("NEXT-VALUE-------->"+temp.getId());
 			temp = temp.getNext();
 		}
+//
+//		DNode temp1 = this.tail;
+//		
+//		while ( temp1 != null ) {
+//			System.out.println("PREV-VALUE-------->"+temp1.getId());
+//			temp1 = temp1.getPrev();
+//		}
 		
 	}
 	
@@ -123,10 +149,89 @@ public class DoubleLinkedList {
 		//list1.multiplyUsingDoublyList(list1,list2);
 		//list1.rotateListByNNode(list1);
 		//list1.fondSplit();
-		list1.head = list1.reverseOnSize(list1, list1.head);
+		//list1.head = list1.reverseOnSize(list1, list1.head)this.head
+//		HashSet<Integer> set=new HashSet<Integer>();  
+//		set.add(1);
+//		list1.findPairTotal(list1.head, list2.head);
+//		System.out.println(set.contains(1));
+//		System.out.println(list1.partisionOfList(list1.head, list1.tail).getId());
+		//list1.quickSort(list1.head, list1.tail);
 		list1.print();
+		list1.removeDuplicate(list1.head);
 		sc.close();
+		list1.print();
 	}
+	
+	private void removeDuplicate(DNode node) {
+		DNode prev = null;
+		HashSet<Integer> set=new HashSet<Integer>();  
+		while (node != null)
+		{	
+			if (set.contains(node.getId())){
+				prev.setNext(node.getNext());		
+			} else {
+				set.add(node.getId());
+			}
+			prev = node;
+			node = node.getNext();
+		}		
+	}
+
+	private void findPairTotal(DNode head1, DNode head2) {
+		HashSet<Integer> set=new HashSet<Integer>();  
+		int X = 10;
+		DNode n1 = head1;
+		while (n1 != null) {
+			set.add(X - n1.getId());
+			n1 = n1.getNext();
+		}
+		int count = 0;
+		while (head2 != null) {
+			if (set.contains(head2.getId())) {
+				count = count + 1;
+			}
+			head2 = head2.getNext();
+		}
+		System.out.println(count+"Total Node Exitt in ystem");
+	}
+
+	private void quickSort(DNode i, DNode j) {	
+		if (i != j && j != null && j.getNext() != i) {
+			DNode k = this.partisionOfList(i, j);
+			
+			System.out.println("PIVOT"+k.getId());
+			this.print();
+			System.out.println(k.getPrev().getId()+"PREV ID");
+			System.out.println(i.getId()+"I ID");
+			quickSort(i, k.getPrev());
+			quickSort(k.getNext(), j);
+		}
+	}
+	
+	private DNode partisionOfList(DNode i, DNode j) {
+		DNode pivot = i;
+		i = i.getNext();
+		while (i != null && j != null && i.getPrev() != j) {
+			System.out.println("Called");
+			if ( i.getId() > pivot.getId() && j.getId() < pivot.getId()) {
+				DNode k1 = i;
+				DNode k2 = j;
+				i = i.getNext();
+				j = j.getPrev();
+				this.swapNodeGroupWise(k1, k2);
+			} else {
+				if (i.getId() <= pivot.getId()) {
+					i = i.getNext();
+				}
+				if (j.getId() > pivot.getId()) {
+					j = j.getPrev();
+				}
+			}
+		}
+		this.swapNodeGroupWise(pivot, j);
+		return pivot;
+	}
+
 	
 	
 	private DNode reverseOnSize(DoubleLinkedList list1, DNode node) {
@@ -142,9 +247,12 @@ public class DoubleLinkedList {
 			node = next;
 			count ++;
 		}
+		prev.setPrev(null);
 		if (node != null && node.getNext() != null) {
 			DNode temp = prev;
-			System.out.println(prev.getPrev().getId()+"===============");
+			while (temp.getNext() != null) {
+				temp = temp.getNext();
+			}
 			temp.setNext(reverseOnSize(list1, node));
 		} 
 		return prev;
@@ -407,6 +515,41 @@ public class DoubleLinkedList {
 
 	}
 
+	public void swapNodeGroupWise(DNode curK1, DNode curK2) {
+		DNode prevK1 = curK1.getPrev();
+		DNode prevK2 = curK2.getPrev();
+				
+		if ( prevK1 == null ) {
+			this.head = curK2;
+		} else {
+			prevK1.setNext(curK2);
+		}
+		
+		if ( prevK2 == null ) {
+			this.head = curK1;
+		} else {
+			prevK2.setNext(curK1);
+		}
+
+		DNode nextK2 = curK2.getNext();
+		DNode nextK1 = curK1.getNext();
+		curK2.setNext(nextK1);
+		curK1.setNext(nextK2);
+		curK1.setPrev(prevK2);
+		curK2.setPrev(prevK1);
+		if (nextK1 == null) {
+			this.tail = curK2;
+		} else {
+			nextK1.setPrev(curK2);
+		}
+		
+		if (nextK2 == null) {
+			this.tail = curK1;
+		} else {
+			nextK2.setPrev(curK1);
+		}
+	}
+	
 	@SuppressWarnings("unused")
 	private void cloneList(DoubleLinkedList list) {
 		DNode node = list.head;

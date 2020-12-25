@@ -52,7 +52,7 @@ public class StackOperations {
 	public void print() {
 		Node node = this.top;
 		while (node != null) {
-			System.out.println(node.getData()+"value of stack");
+			System.out.println(node.getInfixChar()+"value of stack");
 			node = node.getNext();
 		}
 	}
